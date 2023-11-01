@@ -15,6 +15,8 @@ func TestSplit(t *testing.T) {
 		// expect 2 and err
 		{`SELECT 1;SELECT 2`, 2, true},
 		{`SELECT 1;SELECT 2;`, 2, false},
+		// filter comment
+		{`SELECT 1;--S S;`, 1, false},
 	}
 
 	for i := range cases {

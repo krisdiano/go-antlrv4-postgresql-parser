@@ -43,8 +43,10 @@ func SplitWithScanner(sql string) (_ []string, err error) {
 		ttype := t.GetTokenType()
 		if ttype == antlr.TokenEOF {
 			err = ErrUnexpectedEOF
-		} else if t.GetTokenType() != parser.PostgreSQLLexerSEMI {
-			buf.WriteString(t.GetText())
+		} else if ttype != parser.PostgreSQLLexerSEMI {
+			if ttype != parser.PostgreSQLLexerLineComment {
+				buf.WriteString(t.GetText())
+			}
 			continue
 		}
 
